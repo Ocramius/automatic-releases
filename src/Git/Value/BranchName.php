@@ -45,11 +45,6 @@ final class BranchName
         return preg_match('/^(v)?\d+\\.\d+(\\.x)?$/', $this->name) === 1;
     }
 
-    public function isNextMajor(): bool
-    {
-        return $this->name === 'master';
-    }
-
     /**
      * @return array<int, int>
      *
@@ -70,7 +65,7 @@ final class BranchName
         return [$major, $minor];
     }
 
-    public function targetVersion(): SemVerVersion
+    public function targetMinorReleaseVersion(): SemVerVersion
     {
         [$major, $minor] = $this->majorAndMinor();
 

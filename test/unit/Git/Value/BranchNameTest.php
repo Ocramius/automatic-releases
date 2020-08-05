@@ -20,7 +20,6 @@ final class BranchNameTest extends TestCase
 
         self::assertSame($inputName, $branch->name());
         self::assertFalse($branch->isReleaseBranch());
-        self::assertFalse($branch->isNextMajor());
     }
 
     /** @return array<int, array<int, string>> */
@@ -45,14 +44,6 @@ final class BranchNameTest extends TestCase
         BranchName::fromName('');
     }
 
-    public function testMasterIsNextMajorRelease(): void
-    {
-        $branch = BranchName::fromName('master');
-
-        self::assertTrue($branch->isNextMajor());
-        self::assertFalse($branch->isReleaseBranch());
-    }
-
     /**
      * @dataProvider releaseBranches
      */
@@ -60,7 +51,6 @@ final class BranchNameTest extends TestCase
     {
         $branch = BranchName::fromName($inputName);
 
-        self::assertFalse($branch->isNextMajor());
         self::assertTrue($branch->isReleaseBranch());
         self::assertSame([$major, $minor], $branch->majorAndMinor());
     }
@@ -150,12 +140,12 @@ final class BranchNameTest extends TestCase
     /**
      * @dataProvider targetVersionProvider
      */
-    public function testTargetVersion(string $branchName, string $expectedVersion): void
+    public function testTargetMinorReleaseVersion(string $branchName, string $expectedVersion): void
     {
         self::assertEquals(
             SemVerVersion::fromMilestoneName($expectedVersion),
             BranchName::fromName($branchName)
-                ->targetVersion()
+                ->targetMinorReleaseVersion()
         );
     }
 

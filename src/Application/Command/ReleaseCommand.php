@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\AutomaticReleases\Application\Command;
 
+use Laminas\AutomaticReleases\Changelog\ReleaseChangelog;
 use Laminas\AutomaticReleases\Environment\Variables;
 use Laminas\AutomaticReleases\Git\CreateTag;
 use Laminas\AutomaticReleases\Git\Fetch;
@@ -31,6 +32,7 @@ final class ReleaseCommand extends Command
     private CreateTag $createTag;
     private Push $push;
     private CreateRelease $createRelease;
+    private ReleaseChangelog $releaseChangelog;
 
     public function __construct(
         Variables $environment,
@@ -38,6 +40,7 @@ final class ReleaseCommand extends Command
         Fetch $fetch,
         GetMergeTargetCandidateBranches $getMergeTargets,
         GetGithubMilestone $getMilestone,
+        ReleaseChangelog $releaseChangelog,
         CreateReleaseText $createChangelogText,
         CreateTag $createTag,
         Push $push,
@@ -50,6 +53,7 @@ final class ReleaseCommand extends Command
         $this->fetch               = $fetch;
         $this->getMergeTargets     = $getMergeTargets;
         $this->getMilestone        = $getMilestone;
+        $this->releaseChangelog    = $releaseChangelog;
         $this->createChangelogText = $createChangelogText;
         $this->createTag           = $createTag;
         $this->push                = $push;
@@ -80,7 +84,15 @@ final class ReleaseCommand extends Command
             sprintf('No valid release branch found for version %s', $releaseVersion->fullReleaseName())
         );
 
-        $changelog = ($this->createChangelogText)($milestone, $milestoneClosedEvent->repository(), $releaseVersion);
+        ($this->releaseChangelog)($repositoryPath, $releaseVersion, $releaseBranch);
+
+        $changelog = ($this->createChangelogText)(
+            $milestone,
+            $repositoryName,
+            $releaseVersion,
+            $releaseBranch,
+            $repositoryPath
+        );
 
         $tagName = $releaseVersion->fullReleaseName();
 

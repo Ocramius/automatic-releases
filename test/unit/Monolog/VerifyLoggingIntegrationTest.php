@@ -10,7 +10,10 @@ use Laminas\AutomaticReleases\Monolog\ConvertLogContextHttpResponsesIntoStrings;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
+
 use function fopen;
+use function rewind;
+use function stream_get_contents;
 
 /**
  * Small integration test to ensure future compatibility with monolog in our setup.

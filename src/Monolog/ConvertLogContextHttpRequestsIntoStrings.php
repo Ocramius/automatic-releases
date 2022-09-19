@@ -8,6 +8,8 @@ use Monolog\LogRecord;
 use Monolog\Processor\ProcessorInterface;
 use Psr\Http\Message\RequestInterface;
 
+use function array_map;
+
 /** @internal */
 final class ConvertLogContextHttpRequestsIntoStrings implements ProcessorInterface
 {

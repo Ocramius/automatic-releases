@@ -6,12 +6,9 @@ namespace Laminas\AutomaticReleases\Test\Unit\HttpClient;
 
 use Http\Discovery\Psr17FactoryDiscovery;
 use Laminas\AutomaticReleases\HttpClient\LoggingHttpClient;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Log\LoggerInterface;
-use function fopen;
 
 /** @covers \Laminas\AutomaticReleases\HttpClient\LoggingHttpClient */
 final class LoggingHttpClientTest extends TestCase

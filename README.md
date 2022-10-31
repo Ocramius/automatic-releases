@@ -1,5 +1,7 @@
 # Release Automation for `laminas/*` packages
 
+This project has moved to https://github.com/laminas/automatic-releases
+
 This project is a [Github Action](https://github.com/features/actions) that allows
 maintainers of open-source projects that follow [SemVer](https://semver.org/spec/v2.0.0.html)
 to automate the automation of releases.
